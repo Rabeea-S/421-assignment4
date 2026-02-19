@@ -7,7 +7,24 @@ pub enum LinkedList<T>{
 use self::LinkedList::*;
 
 impl<T> LinkedList<T>{
-	//add your code here:
+	pub fn empty() -> Self {
+		Tail
+	}
+
+	pub fn new(t: T) -> Self {
+		Head(t,Box::new(Tail))
+	}
+
+	pub fn push(self, t: T) -> Self {
+		Head(t, Box::new(self))
+	}
+
+	pub fn push_back(&mut self, t: T) {
+		match self {
+			Tail => *self = Self::new(t),
+			Head(_, next) => next.push_back(t),
+		}
+	}
 }
 
 #[cfg(test)]
